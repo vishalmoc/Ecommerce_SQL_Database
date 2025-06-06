@@ -1,0 +1,54 @@
+-- Creating a view for customer order summary
+CREATE VIEW customer_orders_summary AS
+SELECT c.customer_id, c.customer_name, COUNT(o.order_id) AS order_count
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.customer_name;
+-- 1. Basic SELECT, WHERE, GROUP BY
+SELECT customer_id, COUNT(order_id) AS total_orders
+FROM orders
+WHERE order_date BETWEEN '2023-01-01' AND '2023-12-31'
+GROUP BY customer_id
+ORDER BY total_orders DESC;
+
+-- 2. INNER JOIN to get customer names with their orders
+SELECT c.customer_name, o.order_id, o.order_date
+FROM customers c
+INNER JOIN orders o ON c.customer_id = o.customer_id;
+
+-- 3. LEFT JOIN to get customers with or without orders
+SELECT c.customer_name, o.order_id
+FROM customers c
+LEFT JOIN orders o ON c.customer_id = o.customer_id;
+
+-- 4. RIGHT JOIN to get all orders, even if customer data is missing
+SELECT c.customer_name, o.order_id
+FROM customers c
+RIGHT JOIN orders o ON c.customer_id = o.customer_id;
+
+-- 5. Subquery: Top 5 customers by revenue
+SELECT customer_id, SUM(total_amount) AS total_spent
+FROM orders
+GROUP BY customer_id
+ORDER BY total_spent DESC
+LIMIT 5;
+
+-- 6. Aggregate Functions: Average revenue per user
+SELECT c.customer_id, AVG(o.total_amount) AS avg_revenue
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id;
+
+-- 7. Creating a view
+CREATE VIEW customer_orders_summary AS
+SELECT c.customer_id, c.customer_name, COUNT(o.order_id) AS order_count
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.customer_name;
+
+-- 8. Index Optimization
+CREATE INDEX idx_customer_id ON orders(customer_id);
+
+-- 9. Handling NULL values
+SELECT customer_name, COALESCE(phone_number, 'Not Provided') AS phone
+FROM customers;
