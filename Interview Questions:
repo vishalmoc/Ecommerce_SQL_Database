@@ -1,0 +1,42 @@
+Interview Questions Answers
+Difference between WHERE and HAVING:
+
+WHERE filters rows before aggregation.
+
+HAVING filters groups after aggregation.
+
+Types of Joins:
+
+INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN, SELF JOIN, CROSS JOIN.
+
+Average Revenue Per User:
+
+sql
+Copy code
+SELECT customer_id, AVG(total_amount) AS avg_revenue
+FROM orders
+GROUP BY customer_id;
+What are Subqueries?
+
+A query within another SQL query. Example:
+
+sql
+Copy code
+SELECT * FROM orders WHERE customer_id IN (SELECT customer_id FROM customers WHERE city = 'Delhi');
+How to Optimize a SQL Query?
+
+Use indexes
+
+Avoid SELECT *
+
+Use appropriate joins and WHERE clause
+
+Use EXPLAIN to analyze performance
+
+What is a View in SQL?
+
+A virtual table based on the result-set of an SQL query.
+
+Handling NULL values:
+
+Use IS NULL or COALESCE() to replace NULL with default value.
